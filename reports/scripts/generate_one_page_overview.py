@@ -167,13 +167,14 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
 
     def style_ax(ax):
         ax.set_facecolor(panel_bg)
+        ax.set_axisbelow(True)
         for spine in ax.spines.values():
             spine.set_color(edge)
         ax.tick_params(colors=txt)
         ax.yaxis.label.set_color(txt)
         ax.xaxis.label.set_color(txt)
         ax.title.set_color(txt)
-        ax.grid(color='#E5E7EB' if not is_dark else '#1F2937', alpha=0.5)
+        ax.grid(False)
 
     # A: revenue
     ax1 = fig.add_subplot(gs[0, 0])
@@ -185,6 +186,7 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
     for i, v in enumerate(vals):
         ax1.text(i, v, f"{v/1e6:.2f}百万", ha='center', va='bottom', fontsize=9, color=txt)
     ax1.set_ylim(0, max(vals) * 1.25)
+    ax1.yaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
     ax1.annotate(
         f"同比 +{pct_change(metrics.revenue_2019, metrics.revenue_2020):.1f}%",
         xy=(1, metrics.revenue_2020),
@@ -212,6 +214,7 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         t.set_color(txt)
     for b, v, a in zip(bars, v20, v19):
         ax2.text(b.get_x() + b.get_width() / 2, v, f"{pct_change(a, v):+.0f}%", ha='center', va='bottom', fontsize=8, color=txt)
+    ax2.yaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
 
     # C: concentration
     ax3 = fig.add_subplot(gs[0, 2])
@@ -231,6 +234,7 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         t.set_color(txt)
     ax3.text(63, 0.13, f"前10客户 = {metrics.top10_share_2020*100:.1f}%", color=txt, fontsize=10, weight='bold')
     ax3.text(4, -0.34, f"若流失前1客户：约 -{metrics.top1_share_2020*100:.1f}% 收入", color=warn_color, fontsize=9)
+    ax3.xaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
 
     # D: monthly trend
     ax4 = fig.add_subplot(gs[1, :2])
@@ -255,6 +259,7 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         fontsize=9,
         color=txt,
     )
+    ax4.yaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
 
     # E: text panel
     ax5 = fig.add_subplot(gs[1, 2])
