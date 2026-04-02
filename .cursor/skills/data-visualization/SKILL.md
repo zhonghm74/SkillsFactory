@@ -1,6 +1,6 @@
 ---
 name: data-visualization
-description: Design and critique truthful, accessible data visualizations and data stories. Use when asked to choose chart types, improve chart clarity, reduce chart junk, enforce axis integrity, apply WCAG contrast/color-blind-safe rules, or turn analysis into an executive narrative with actionable recommendations.
+description: Design and critique truthful, accessible data visualizations and data stories. Use when asked to choose chart types, improve chart clarity, reduce chart junk, enforce axis integrity, apply WCAG contrast/color-blind-safe rules, or turn analysis into an executive narrative with actionable recommendations. Do not use for pure data cleaning/ETL, model training/tuning, or non-visual document editing tasks.
 license: MIT
 allowed-tools:
   - Read
@@ -8,6 +8,7 @@ allowed-tools:
   - Grep
   - Write
   - Edit
+  - Bash
 metadata:
   version: 1.0.0
   domains: [analytics, data-visualization, storytelling, accessibility]
@@ -89,7 +90,12 @@ Create clear, ethical, and decision-ready visualizations from raw analysis.
    - Supporting evidence second
    - Deep methodology in appendix
 
-**Verification:** Output includes (a) insight headline, (b) evidence, (c) action/implication.
+4. Run deterministic validation scripts before final output:
+   - `python scripts/validate_axis_integrity.py --spec chart_spec.json`
+   - `python scripts/validate_accessibility.py --spec chart_spec.json`
+   - If validation fails, fix and rerun until both pass.
+
+**Verification:** Output includes (a) insight headline, (b) evidence, (c) action/implication, and (d) passing script validation.
 
 ## Output Format
 
@@ -110,6 +116,22 @@ Return results in this structure:
    - Executive title
    - 2-4 chart annotations
    - Recommended action
+
+## Scripts
+
+Use these scripts to enforce run-validate-fix-repeat checks.
+
+| Script | Purpose | Typical Command |
+|---|---|---|
+| `scripts/validate_axis_integrity.py` | Validate bar/column baseline rules and detect high-risk truncation patterns | `python scripts/validate_axis_integrity.py --spec chart_spec.json` |
+| `scripts/validate_accessibility.py` | Validate WCAG-related contrast targets and color-independent encoding metadata | `python scripts/validate_accessibility.py --spec chart_spec.json` |
+
+### Script Exit Codes
+
+- `0` = validation passed
+- `1` = general runtime failure
+- `2` = invalid arguments / malformed input
+- `10` = validation failure (must fix before final output)
 
 ## Anti-Patterns
 
@@ -132,6 +154,8 @@ Return results in this structure:
 - [ ] Accessibility checks documented (contrast + color-independence).
 - [ ] Title states insight; annotations explain key events.
 - [ ] Output ends with actionable implication.
+- [ ] `python scripts/validate_axis_integrity.py --spec chart_spec.json` passes.
+- [ ] `python scripts/validate_accessibility.py --spec chart_spec.json` passes.
 
 ## References
 

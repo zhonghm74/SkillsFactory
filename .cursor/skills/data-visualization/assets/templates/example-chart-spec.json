@@ -1,0 +1,15 @@
+{
+  "chart_type": "bar",
+  "axis": {
+    "y_min": 0,
+    "baseline_disclosure": "Bar chart uses zero baseline for truthful length encoding.",
+    "nonzero_baseline_justification": ""
+  },
+  "accessibility": {
+    "regular_text_contrast": 4.8,
+    "large_text_contrast": 3.4,
+    "graphical_contrast": 3.2,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Quarterly revenue increased in Q3 after campaign optimization, then stabilized in Q4."
+  }
+}
