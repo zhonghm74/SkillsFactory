@@ -8,6 +8,23 @@ The synthesis panel applies the "wisdom of crowds" principle to skill evaluation
 
 **Key Principle:** A skill that satisfies a single perspective may have critical blind spots. Multi-perspective evaluation ensures comprehensive quality.
 
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Panel Composition](#panel-composition)
+- [Agent Definitions](#agent-definitions)
+- [Execution Protocol](#execution-protocol)
+- [[Agent Name] Review](#agent-name-review)
+- [Synthesis Panel Results](#synthesis-panel-results)
+- [Iteration Protocol](#iteration-protocol)
+- [Human Review Required](#human-review-required)
+- [Quality Thresholds](#quality-thresholds)
+- [Agent Prompt Templates](#agent-prompt-templates)
+- [Integration with Skill Creation Flow](#integration-with-skill-creation-flow)
+- [Forked Context for Panel Agents](#forked-context-for-panel-agents)
+- [Phase 4: Synthesis Panel](#phase-4-synthesis-panel)
+
 ---
 
 ## Panel Composition

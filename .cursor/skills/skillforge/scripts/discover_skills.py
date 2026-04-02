@@ -75,6 +75,24 @@ SKILL_SOURCES = [
         "priority": 1
     },
     {
+        "name": "codex",
+        "path": Path.home() / ".codex" / "skills",
+        "pattern": "*/[Ss][Kk][Ii][Ll][Ll].[Mm][Dd]",  # Case-insensitive: SKILL.md or skill.md
+        "priority": 1
+    },
+    {
+        "name": "cursor-user",
+        "path": Path.home() / ".cursor" / "skills",
+        "pattern": "*/[Ss][Kk][Ii][Ll][Ll].[Mm][Dd]",  # Case-insensitive: SKILL.md or skill.md
+        "priority": 1
+    },
+    {
+        "name": "cursor-project",
+        "path": Path.cwd() / ".cursor" / "skills",
+        "pattern": "*/[Ss][Kk][Ii][Ll][Ll].[Mm][Dd]",  # Case-insensitive: SKILL.md or skill.md
+        "priority": 1
+    },
+    {
         "name": "superpowers",
         "path": Path.home() / ".claude" / "plugins" / "cache" / "superpowers" / "skills",
         "pattern": "*/*.md",

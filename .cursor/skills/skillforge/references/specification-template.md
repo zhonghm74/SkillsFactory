@@ -10,6 +10,15 @@ The specification follows meta-prompting principles:
 - **Measurable criteria:** Success is verifiable, not subjective
 - **XML structure:** Semantic organization for reliable parsing
 
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Full Specification Template](#full-specification-template)
+- [Section Guidelines](#section-guidelines)
+- [Validation Checklist](#validation-checklist)
+- [Specification Validation](#specification-validation)
+
 ---
 
 ## Full Specification Template

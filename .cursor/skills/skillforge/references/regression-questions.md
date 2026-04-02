@@ -12,6 +12,18 @@ Regression questioning prevents premature convergence on suboptimal designs by s
 - At least 3 simulated expert perspectives considered
 - Evolution/timelessness explicitly evaluated with score ≥7
 
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Question Categories](#question-categories)
+- [Temporal Projection](#temporal-projection)
+- [Round Structure](#round-structure)
+- [Round 3 Analysis](#round-3-analysis)
+- [Question Bank by Skill Type](#question-bank-by-skill-type)
+- [Anti-Patterns in Questioning](#anti-patterns-in-questioning)
+- [Integration with Other Phases](#integration-with-other-phases)
+
 ---
 
 ## Question Categories

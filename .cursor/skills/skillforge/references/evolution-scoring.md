@@ -14,6 +14,21 @@ Skills that score poorly become:
 
 **Requirement:** All generated skills must score ≥7/10 on timelessness.
 
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Timelessness Scoring Rubric](#timelessness-scoring-rubric)
+- [Scoring Process](#scoring-process)
+- [Temporal Projection](#temporal-projection)
+- [Common Evolution Anti-Patterns](#common-evolution-anti-patterns)
+- [Supported Patterns](#supported-patterns)
+- [Supported Patterns](#supported-patterns)
+- [Score Adjustment Factors](#score-adjustment-factors)
+- [Evolution Score Template](#evolution-score-template)
+- [Evolution Analysis for [Skill Name]](#evolution-analysis-for-skill-name)
+- [Integration with Synthesis Panel](#integration-with-synthesis-panel)
+
 ---
 
 ## Timelessness Scoring Rubric
