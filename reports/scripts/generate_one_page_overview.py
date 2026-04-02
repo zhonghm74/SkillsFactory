@@ -131,22 +131,39 @@ def calc_metrics(df: pd.DataFrame) -> tuple[Metrics, pd.DataFrame]:
 def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: Path, font_name: str) -> None:
     is_dark = kind == 'dark'
 
-    if is_dark:
-        bg = '#0B1220'
-        panel_bg = '#111827'
-        txt = '#E5E7EB'
-        muted = '#9CA3AF'
-        accent = '#38BDF8'
-        edge = '#334155'
-    else:
-        bg = '#FFFFFF'
-        panel_bg = '#FFFFFF'
-        txt = '#111827'
-        muted = '#9CA3AF'
-        accent = '#2563EB'
-        edge = '#D1D5DB'
+    # Anthropic brand palette
+    brand_dark = '#141413'
+    brand_light = '#faf9f5'
+    brand_mid_gray = '#b0aea5'
+    brand_light_gray = '#e8e6dc'
+    brand_orange = '#d97757'
+    brand_blue = '#6a9bcc'
+    brand_green = '#788c5d'
 
-    warn_color = '#EF4444'
+    if is_dark:
+        bg = brand_dark
+        panel_bg = '#1c1c1b'
+        txt = brand_light
+        muted = brand_mid_gray
+        accent = brand_blue
+        accent_alt = brand_orange
+        tertiary = brand_green
+        edge = '#2a2a29'
+        grid_color = '#2b2b2a'
+        box_bg = '#1e1e1d'
+    else:
+        bg = brand_light
+        panel_bg = '#ffffff'
+        txt = brand_dark
+        muted = brand_mid_gray
+        accent = brand_blue
+        accent_alt = brand_orange
+        tertiary = brand_green
+        edge = brand_light_gray
+        grid_color = brand_light_gray
+        box_bg = '#fffdf8'
+
+    warn_color = brand_orange
 
     plt.style.use('dark_background' if is_dark else 'seaborn-v0_8-whitegrid')
     # Re-apply font settings after style.use, because style presets can overwrite font config.
@@ -180,20 +197,20 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
     ax1 = fig.add_subplot(gs[0, 0])
     style_ax(ax1)
     vals = [metrics.revenue_2019, metrics.revenue_2020]
-    ax1.bar(['2019', '2020'], vals, color=[muted, accent], edgecolor='none', width=0.58)
+    ax1.bar(['2019', '2020'], vals, color=[muted, accent_alt], edgecolor='none', width=0.58)
     ax1.set_title('A. 收入规模', loc='left', fontsize=12, weight='bold')
     ax1.set_ylabel('收入')
     for i, v in enumerate(vals):
         ax1.text(i, v, f"{v/1e6:.2f}百万", ha='center', va='bottom', fontsize=9, color=txt)
     ax1.set_ylim(0, max(vals) * 1.25)
-    ax1.yaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
+    ax1.yaxis.grid(True, color=grid_color, alpha=0.45, linewidth=0.8)
     ax1.annotate(
         f"同比 +{pct_change(metrics.revenue_2019, metrics.revenue_2020):.1f}%",
         xy=(1, metrics.revenue_2020),
         xytext=(0.45, metrics.revenue_2020 * 0.8),
-        arrowprops=dict(arrowstyle='->', lw=1.2, color=accent),
+        arrowprops=dict(arrowstyle='->', lw=1.2, color=accent_alt),
         fontsize=10,
-        color=accent,
+        color=accent_alt,
     )
 
     # B: drivers
@@ -214,14 +231,14 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         t.set_color(txt)
     for b, v, a in zip(bars, v20, v19):
         ax2.text(b.get_x() + b.get_width() / 2, v, f"{pct_change(a, v):+.0f}%", ha='center', va='bottom', fontsize=8, color=txt)
-    ax2.yaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
+    ax2.yaxis.grid(True, color=grid_color, alpha=0.45, linewidth=0.8)
 
     # C: concentration
     ax3 = fig.add_subplot(gs[0, 2])
     style_ax(ax3)
     shares = [metrics.top1_share_2020 * 100, (metrics.top10_share_2020 - metrics.top1_share_2020) * 100, (1 - metrics.top10_share_2020) * 100]
     names = ['前1客户', '前2-10客户', '其他客户']
-    colors = [accent, '#60A5FA', muted]
+    colors = [accent_alt, accent, tertiary]
     left = 0
     for s, c, n in zip(shares, colors, names):
         ax3.barh(['2020收入结构'], [s], left=left, color=c, edgecolor=bg, label=n)
@@ -234,12 +251,12 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         t.set_color(txt)
     ax3.text(63, 0.13, f"前10客户 = {metrics.top10_share_2020*100:.1f}%", color=txt, fontsize=10, weight='bold')
     ax3.text(4, -0.34, f"若流失前1客户：约 -{metrics.top1_share_2020*100:.1f}% 收入", color=warn_color, fontsize=9)
-    ax3.xaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
+    ax3.xaxis.grid(True, color=grid_color, alpha=0.45, linewidth=0.8)
 
     # D: monthly trend
     ax4 = fig.add_subplot(gs[1, :2])
     style_ax(ax4)
-    for yr, color, lw in [(2019, muted, 2.2), (2020, accent, 2.6)]:
+    for yr, color, lw in [(2019, muted, 2.2), (2020, accent_alt, 2.6)]:
         d = monthly[monthly['year'] == yr].sort_values('month')
         ax4.plot(d['month'], d['revenue'], marker='o', linewidth=lw, color=color, label=str(yr))
     ax4.set_xticks(range(1, 13))
@@ -255,11 +272,11 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         f"峰值：{int(peak['month'])}月（{peak['revenue']/1e6:.2f}百万）",
         xy=(peak['month'], peak['revenue']),
         xytext=(peak['month'] + 0.6, peak['revenue'] * 0.78),
-        arrowprops=dict(arrowstyle='->', lw=1.2, color=accent),
+        arrowprops=dict(arrowstyle='->', lw=1.2, color=accent_alt),
         fontsize=9,
         color=txt,
     )
-    ax4.yaxis.grid(True, color=('#E5E7EB' if not is_dark else '#1F2937'), alpha=0.35, linewidth=0.8)
+    ax4.yaxis.grid(True, color=grid_color, alpha=0.45, linewidth=0.8)
 
     # E: text panel
     ax5 = fig.add_subplot(gs[1, 2])
@@ -286,7 +303,7 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         ha='left',
         fontsize=10,
         color=txt,
-        bbox=dict(boxstyle='round,pad=0.6', facecolor=('#0F172A' if is_dark else '#F8FAFC'), edgecolor=edge),
+        bbox=dict(boxstyle='round,pad=0.6', facecolor=box_bg, edgecolor=edge),
     )
 
     title = '业务经营一页总览（管理层·深色版）' if is_dark else '业务经营一页总览（管理层）'
