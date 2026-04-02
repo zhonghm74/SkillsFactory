@@ -11,6 +11,18 @@ The multi-lens framework ensures comprehensive analysis by requiring explicit ap
 - At least 3 lenses must yield actionable insights
 - Conflicting perspectives must be explicitly resolved
 
+
+## Table of Contents
+
+- [Overview](#overview)
+- [The 11 Thinking Models](#the-11-thinking-models)
+- [Pre-Mortem Analysis](#pre-mortem-analysis)
+- [Architecture Comparison](#architecture-comparison)
+- [Opportunity Costs](#opportunity-costs)
+- [Lens Application Protocol](#lens-application-protocol)
+- [Lens Relevance Assessment](#lens-relevance-assessment)
+- [Integration with Skill Creation](#integration-with-skill-creation)
+
 ---
 
 ## The 11 Thinking Models

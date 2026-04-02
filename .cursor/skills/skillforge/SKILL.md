@@ -10,6 +10,7 @@ allowed-tools:
   - Grep
   - Write
   - Edit
+  - Bash
 metadata:
   version: 4.1.0
   subagent_model: claude-opus-4-5-20251101
@@ -236,7 +237,8 @@ Phase 0 uses a pre-built index of all skills:
 python scripts/discover_skills.py
 
 # Index location: ~/.cache/skillrecommender/skill_index.json
-# Scans: ~/.claude/skills/, plugins/marketplaces/*, plugins/cache/*
+# Scans: ~/.claude/skills/, ~/.codex/skills/, ~/.cursor/skills/, ./.cursor/skills/,
+#        plugins/marketplaces/*, plugins/cache/*
 ```
 
 ### Integration with Phases 1-4
@@ -256,12 +258,18 @@ Before distribution, validate your skill:
 ```bash
 # Quick validation (required for packaging)
 python scripts/quick_validate.py ~/.claude/skills/my-skill/
+python scripts/quick_validate.py ~/.codex/skills/my-skill/
+python scripts/quick_validate.py ./.cursor/skills/my-skill/
 
 # Full structural validation
 python scripts/validate-skill.py ~/.claude/skills/my-skill/
+python scripts/validate-skill.py ~/.codex/skills/my-skill/
+python scripts/validate-skill.py ./.cursor/skills/my-skill/
 
 # Package for distribution
 python scripts/package_skill.py ~/.claude/skills/my-skill/ ./dist
+python scripts/package_skill.py ~/.codex/skills/my-skill/ ./dist
+python scripts/package_skill.py ./.cursor/skills/my-skill/ ./dist
 ```
 
 ### Frontmatter Requirements
@@ -335,6 +343,9 @@ metadata:
 
 ```
 ~/.claude/skills/{skill-name}/
+~/.codex/skills/{skill-name}/
+~/.cursor/skills/{skill-name}/
+./.cursor/skills/{skill-name}/
 ├── SKILL.md                    # Main entry point (required)
 ├── references/                 # Deep documentation (optional)
 │   ├── patterns.md
@@ -502,6 +513,9 @@ USER INPUT: "Create a skill for X"
 **Check for overlap with existing skills:**
 ```bash
 ls ~/.claude/skills/
+ls ~/.codex/skills/
+ls ~/.cursor/skills/
+ls ./.cursor/skills/
 # Grep for similar triggers in existing SKILL.md files
 ```
 
@@ -692,6 +706,10 @@ Before proceeding to Phase 3:
    mkdir -p ~/.claude/skills/{skill-name}/references
    mkdir -p ~/.claude/skills/{skill-name}/assets/templates
    mkdir -p ~/.claude/skills/{skill-name}/scripts  # if scripts needed
+   # or project-local Cursor:
+   mkdir -p ./.cursor/skills/{skill-name}/references
+   mkdir -p ./.cursor/skills/{skill-name}/assets/templates
+   mkdir -p ./.cursor/skills/{skill-name}/scripts
 
 2. Write SKILL.md
    • Frontmatter (YAML - allowed properties only)

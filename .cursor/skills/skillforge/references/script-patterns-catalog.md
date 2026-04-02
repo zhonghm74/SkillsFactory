@@ -2,6 +2,14 @@
 
 Standard Python patterns for skill scripts, derived from successful implementations across the ecosystem. These patterns ensure consistency, reliability, and agentic capability.
 
+
+## Table of Contents
+
+- [Core Patterns](#core-patterns)
+- [Category Templates](#category-templates)
+- [Quick Reference](#quick-reference)
+- [Related References](#related-references)
+
 ---
 
 ## Core Patterns

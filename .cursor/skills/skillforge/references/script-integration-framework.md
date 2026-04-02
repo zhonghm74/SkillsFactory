@@ -2,6 +2,23 @@
 
 Scripts transform skills from documentation-only guides into executable, verifiable systems. This framework provides decision criteria for when to create scripts, how to integrate them effectively, and patterns for making skills autonomous and self-verifying.
 
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Decision Tree: Script vs No Script](#decision-tree-script-vs-no-script)
+- [Script Categories](#script-categories)
+- [Language Selection](#language-selection)
+- [Agentic Script Patterns](#agentic-script-patterns)
+- [Script Discovery Process (Phase 1)](#script-discovery-process-phase-1)
+- [Integration Patterns](#integration-patterns)
+- [Phase 2: Validation](#phase-2-validation)
+- [Scripts](#scripts)
+- [Agentic Capability Checklist](#agentic-capability-checklist)
+- [Hooks Integration](#hooks-integration)
+- [Anti-Patterns](#anti-patterns)
+- [Related References](#related-references)
+
 ---
 
 ## Overview

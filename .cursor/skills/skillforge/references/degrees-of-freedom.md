@@ -4,6 +4,15 @@ When writing SKILL.md instructions, choose how much latitude to give Claude. Not
 
 Think of Claude as exploring a path: a narrow bridge with cliffs needs specific guardrails (low freedom), while an open field allows many routes (high freedom).
 
+
+## Table of Contents
+
+- [The Three Levels](#the-three-levels)
+- [Decision Matrix](#decision-matrix)
+- [Mixing Levels in One Skill](#mixing-levels-in-one-skill)
+- [Common Mistakes](#common-mistakes)
+- [Related References](#related-references)
+
 ---
 
 ## The Three Levels
