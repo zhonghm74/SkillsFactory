@@ -1,0 +1,16 @@
+{
+  "chart_type": "horizontal-bar",
+  "axis": {
+    "x": "revenue",
+    "y": "product_code",
+    "y_min": 0,
+    "baseline_disclosure": "Horizontal bar chart starts at zero to preserve truthful product contribution comparison."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Top products generate a significant share of revenue, with the highest product clearly above the lower-ranked items."
+  }
+}

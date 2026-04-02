@@ -1,0 +1,16 @@
+{
+  "chart_type": "column",
+  "axis": {
+    "x": "year",
+    "y": "revenue",
+    "y_min": 0,
+    "baseline_disclosure": "Column chart uses zero baseline to preserve magnitude comparison."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Revenue is higher in 2020 than 2019, showing a strong increase as business volume expanded."
+  }
+}

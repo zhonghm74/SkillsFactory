@@ -1,0 +1,16 @@
+{
+  "chart_type": "horizontal-bar",
+  "axis": {
+    "x": "revenue",
+    "y": "client_id",
+    "y_min": 0,
+    "baseline_disclosure": "Horizontal bar chart starts at zero to avoid exaggerating client differences."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Client 7158 is the highest contributor and the top ten clients account for a higher share, showing concentration risk."
+  }
+}
