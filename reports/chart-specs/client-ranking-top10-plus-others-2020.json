@@ -1,0 +1,16 @@
+{
+  "chart_type": "horizontal-bar",
+  "axis": {
+    "x": "revenue",
+    "y": "client_rank_group",
+    "y_min": 0,
+    "baseline_disclosure": "Horizontal bar chart starts at zero to preserve rank magnitude comparison."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Top client ranks have higher revenue bars while long-tail clients contribute less, showing concentration in a few clients."
+  }
+}
