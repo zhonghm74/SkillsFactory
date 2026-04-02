@@ -93,6 +93,8 @@ Create clear, ethical, and decision-ready visualizations from raw analysis.
 4. Run deterministic validation scripts before final output:
    - `python scripts/validate_axis_integrity.py --spec chart_spec.json`
    - `python scripts/validate_accessibility.py --spec chart_spec.json`
+   - For Chinese/CJK labels, run font rendering validation first:
+     - `python scripts/validate_cjk_font_rendering.py --text "中文渲染检查：增长与客户结构"`
    - If validation fails, fix and rerun until both pass.
 
 **Verification:** Output includes (a) insight headline, (b) evidence, (c) action/implication, and (d) passing script validation.
@@ -125,6 +127,7 @@ Use these scripts to enforce run-validate-fix-repeat checks.
 |---|---|---|
 | `scripts/validate_axis_integrity.py` | Validate bar/column baseline rules and detect high-risk truncation patterns | `python scripts/validate_axis_integrity.py --spec chart_spec.json` |
 | `scripts/validate_accessibility.py` | Validate WCAG-related contrast targets and color-independent encoding metadata | `python scripts/validate_accessibility.py --spec chart_spec.json` |
+| `scripts/validate_cjk_font_rendering.py` | Validate matplotlib can render Chinese/CJK labels without missing glyph fallback | `python scripts/validate_cjk_font_rendering.py --text "中文渲染检查：增长与客户结构"` |
 
 ### Script Exit Codes
 
@@ -156,6 +159,7 @@ Use these scripts to enforce run-validate-fix-repeat checks.
 - [ ] Output ends with actionable implication.
 - [ ] `python scripts/validate_axis_integrity.py --spec chart_spec.json` passes.
 - [ ] `python scripts/validate_accessibility.py --spec chart_spec.json` passes.
+- [ ] For Chinese/CJK charts, `python scripts/validate_cjk_font_rendering.py --text "中文渲染检查"` passes.
 
 ## References
 
