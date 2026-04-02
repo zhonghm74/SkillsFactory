@@ -34,21 +34,19 @@ Turn business telemetry into decision-ready recommendations with explicit causal
 
 ## Process
 
-### Phase 1: Indicator Mapping
+### Phase 1: Indicator Mapping + Anomaly Diagnostics
 
 1. Define top-level objective metric.
 2. Decompose into drivers and sub-drivers.
 3. Assign owners, thresholds, and action corridors.
 4. Mark known conflicts (for example, speed vs quality).
 
-### Phase 2: Anomaly Diagnostics
+5. Execute 7-step RCA sequence from references.
+6. Distinguish data quality issues from behavior shifts.
+7. Isolate affected segments and decompose ratios.
+8. Produce suspected-cause shortlist with confidence notes.
 
-1. Execute 7-step RCA sequence from references.
-2. Distinguish data quality issues from behavior shifts.
-3. Isolate affected segments and decompose ratios.
-4. Produce suspected-cause shortlist with confidence notes.
-
-### Phase 3: Hypothesis Verification
+### Phase 2: Hypothesis Verification
 
 1. Formulate falsifiable hypothesis.
 2. Select verification path:
@@ -57,7 +55,7 @@ Turn business telemetry into decision-ready recommendations with explicit causal
    - policy (counterfactual methods)
 3. Run predict-then-verify loop; update confidence.
 
-### Phase 4: Executive Reporting (Minto)
+### Phase 3: Executive Reporting (Minto)
 
 1. Lead with BLUF assertion.
 2. Group support arguments in MECE structure.

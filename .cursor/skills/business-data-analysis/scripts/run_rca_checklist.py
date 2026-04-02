@@ -4,7 +4,9 @@
 import argparse
 import json
 import sys
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import List
 
 STEPS = [
     "Reproduction",
@@ -17,21 +19,21 @@ STEPS = [
 ]
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate RCA checklist output")
-    parser.add_argument("incident", type=Path)
-    parser.add_argument("--output", required=True, type=Path)
-    args = parser.parse_args()
+@dataclass
+class Result:
+    success: bool
+    message: str
+    errors: List[str] = field(default_factory=list)
 
-    if not args.incident.exists():
-        print(f"Incident input not found: {args.incident}", file=sys.stderr)
-        sys.exit(3)
+
+def generate_rca(incident: Path, output: Path) -> Result:
+    if not incident.exists():
+        return Result(False, f"Incident input not found: {incident}", errors=["file_not_found"])
 
     try:
-        data = json.loads(args.incident.read_text(encoding="utf-8"))
+        data = json.loads(incident.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        print(f"Invalid incident JSON: {exc}", file=sys.stderr)
-        sys.exit(10)
+        return Result(False, f"Invalid incident JSON: {exc}", errors=["invalid_json"])
 
     metric = data.get("metric", "unknown_metric")
     anomaly = data.get("anomaly", "unspecified anomaly")
@@ -55,10 +57,28 @@ def main() -> None:
         "- TODO",
     ])
 
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"RCA summary written: {args.output}")
-    sys.exit(0)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return Result(True, f"RCA summary written: {output}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Generate RCA checklist output")
+    parser.add_argument("incident", type=Path)
+    parser.add_argument("--output", required=True, type=Path)
+    args = parser.parse_args()
+
+    result = generate_rca(args.incident, args.output)
+    stream = sys.stdout if result.success else sys.stderr
+    print(result.message, file=stream)
+
+    if result.success:
+        sys.exit(0)
+    if "file_not_found" in result.errors:
+        sys.exit(3)
+    if "invalid_json" in result.errors:
+        sys.exit(10)
+    sys.exit(1)
 
 
 if __name__ == "__main__":
