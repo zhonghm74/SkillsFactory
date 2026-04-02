@@ -6,6 +6,7 @@
     "agents/interface.yaml",
     "references",
     "scripts",
-    "evals/trigger_cases.json"
+    "evals/trigger_cases.json",
+    "references/visualization-handoff.md"
   ]
 }

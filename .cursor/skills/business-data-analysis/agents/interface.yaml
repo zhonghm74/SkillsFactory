@@ -16,6 +16,11 @@ outputs:
     type: markdown
   - name: executive_report
     type: markdown
+  - name: visualization_brief
+    type: markdown
+  - name: chart_plan
+    type: object
 contracts:
   - "Output must include recommendation, owner, and timeline"
   - "Report must be BLUF and Minto-structured"
+  - "Visualization handoff must reference data-visualization skill and include chart objective, encoding, and integrity notes"

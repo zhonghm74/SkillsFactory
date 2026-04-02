@@ -1,6 +1,6 @@
 ---
 name: business-data-analysis
-description: Build KPI/driver trees, run anomaly root-cause diagnostics, verify business hypotheses, and produce executive reports using the Minto Pyramid. Use when asked to diagnose metric shifts, map business indicators, validate customer/operations/policy assumptions, or deliver decision-ready analysis. Do not use for pure ETL/data cleaning, model training, or visualization-only styling.
+description: Build KPI/driver trees, run anomaly root-cause diagnostics, verify business hypotheses, and produce executive reports using the Minto Pyramid. Use when asked to diagnose metric shifts, map business indicators, validate customer/operations/policy assumptions, or deliver decision-ready analysis. For charting and visual storytelling output, explicitly invoke the data-visualization skill with prepared chart specs. Do not use for pure ETL/data cleaning, model training, or visualization-only styling.
 license: MIT
 allowed-tools:
   - Read
@@ -10,9 +10,9 @@ allowed-tools:
   - Edit
   - Bash
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   domains: [business-analysis, kpi, rca, causality, reporting]
-  outputs: [driver-tree, rca-summary, hypothesis-summary, executive-report]
+  outputs: [driver-tree, rca-summary, hypothesis-summary, executive-report, chart-specs, visualization-brief]
 ---
 
 # Business Data Analysis
@@ -31,6 +31,9 @@ Turn business telemetry into decision-ready recommendations with explicit causal
 
 - In-scope: indicator decomposition, anomaly diagnostics, hypothesis verification, executive reporting.
 - Out-of-scope: pure data cleaning/ETL, model training, chart beautification-only requests.
+- Visualization policy: this skill prepares chart specifications and business narrative context; the
+  `data-visualization` skill is responsible for chart design quality, accessibility checks, and
+  annotation/story polish.
 
 ## Process
 
@@ -55,12 +58,21 @@ Turn business telemetry into decision-ready recommendations with explicit causal
    - policy (counterfactual methods)
 3. Run predict-then-verify loop; update confidence.
 
-### Phase 3: Executive Reporting (Minto)
+### Phase 3: Executive Reporting + Visualization (Minto + `data-visualization`)
 
 1. Lead with BLUF assertion.
 2. Group support arguments in MECE structure.
 3. Attach evidence and caveats.
-4. End with recommended action, owner, and timeline.
+4. Prepare `chart_specs` from validated findings:
+   - trend charts for metric evolution
+   - comparison bars for cohort/channel differences
+   - decomposition chart for numerator/denominator or funnel stages
+5. Invoke `data-visualization` skill for each chart spec:
+   - request chart type selection rationale
+   - require axis-integrity and accessibility checks
+   - require insight-led title + annotations
+6. Merge returned visuals into report appendix and executive narrative.
+7. End with recommended action, owner, and timeline.
 
 ## Required Script Calls
 
@@ -69,6 +81,29 @@ python scripts/build_driver_tree.py input.json --output out/driver_tree.json
 python scripts/run_rca_checklist.py incident.json --output out/rca.md
 python scripts/validate_report.py out/executive_report.md
 ```
+
+## Cross-Skill Invocation Contract (`data-visualization`)
+
+Use this payload when handing off:
+
+```yaml
+business_context:
+  objective: "<business objective>"
+  key_question: "<decision question>"
+chart_spec:
+  chart_type_candidate: "<bar|line|scatter|100%-stacked>"
+  x: "<dimension>"
+  y: "<metric>"
+  segment: "<optional segment>"
+  baseline_policy: "bar/column must start at zero unless explicitly justified"
+  insight_claim: "<single sentence insight to emphasize>"
+```
+
+Expected return from `data-visualization`:
+- recommended chart form + rationale
+- integrity checks (axis/baseline/disclosure)
+- accessibility checks (contrast/color-independent encoding)
+- narrative layer (title + annotations + action implication)
 
 ## Scripts
 
@@ -93,7 +128,9 @@ Produce all artifacts unless user asks otherwise:
 2. `rca_summary` (markdown)
 3. `hypothesis_summary` (markdown)
 4. `executive_report` (BLUF + Minto structure)
-5. `next_actions` (owner, timeline, success metric)
+5. `chart_specs` (structured specs for data-visualization handoff)
+6. `visualization_brief` (chart list + intended business insight per chart)
+7. `next_actions` (owner, timeline, success metric)
 
 ## Anti-Patterns
 
@@ -102,6 +139,7 @@ Produce all artifacts unless user asks otherwise:
 | Jumping to conclusions before RCA sequence | Causes false causality | Complete all 7 RCA steps first |
 | Collecting all data before hypothesis framing | Analysis paralysis | Use falsifiable hypothesis-first loop |
 | Reporting data chronologically without BLUF | Slows executive decisions | Use assertion-first Minto structure |
+| Drawing charts directly here without visualization handoff | Inconsistent visual quality and accessibility | Hand off chart specs to `data-visualization` skill |
 
 ## Verification Checklist
 
@@ -109,6 +147,7 @@ Produce all artifacts unless user asks otherwise:
 - [ ] RCA includes all 7 diagnostic steps.
 - [ ] Hypothesis is falsifiable and test path is explicit.
 - [ ] Report is answer-first and MECE.
+- [ ] Chart specs are prepared for `data-visualization` and linked to core findings.
 - [ ] Final recommendation includes owner and execution timeline.
 
 ## Extension Points
@@ -116,6 +155,7 @@ Produce all artifacts unless user asks otherwise:
 1. Add causal method selector for DiD/synthetic-control workflows.
 2. Add attribution model recommendation helper for channel analysis.
 3. Add bias audit script for confirmation/selection/survivorship checks.
+4. Add automated bridge script to convert analysis outputs into `data-visualization` payloads.
 
 ## References
 
