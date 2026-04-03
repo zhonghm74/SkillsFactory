@@ -17,6 +17,11 @@ import numpy as np
 import pandas as pd
 from matplotlib import font_manager, rcParams
 
+# scientific-visualization style assets
+SCIVIZ_ASSETS = Path('/workspace/.cursor/skills/scientific-visualization/assets')
+SCIVIZ_PUBLICATION_STYLE = SCIVIZ_ASSETS / 'publication.mplstyle'
+SCIVIZ_PRESENTATION_STYLE = SCIVIZ_ASSETS / 'presentation.mplstyle'
+
 
 @dataclass
 class Metrics:
@@ -131,41 +136,47 @@ def calc_metrics(df: pd.DataFrame) -> tuple[Metrics, pd.DataFrame]:
 def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: Path, font_name: str) -> None:
     is_dark = kind == 'dark'
 
-    # Anthropic brand palette
-    brand_dark = '#141413'
-    brand_light = '#faf9f5'
-    brand_mid_gray = '#b0aea5'
-    brand_light_gray = '#e8e6dc'
-    brand_orange = '#d97757'
-    brand_blue = '#6a9bcc'
-    brand_green = '#788c5d'
+    # scientific-visualization palette (Okabe-Ito, colorblind-friendly)
+    sci_orange = '#E69F00'
+    sci_sky_blue = '#56B4E9'
+    sci_green = '#009E73'
+    sci_yellow = '#F0E442'
+    sci_blue = '#0072B2'
+    sci_red = '#D55E00'
+    sci_purple = '#CC79A7'
+    sci_black = '#000000'
 
     if is_dark:
-        bg = brand_dark
-        panel_bg = '#1c1c1b'
-        txt = brand_light
-        muted = brand_mid_gray
-        accent = brand_blue
-        accent_alt = brand_orange
-        tertiary = brand_green
-        edge = '#2a2a29'
-        grid_color = '#2b2b2a'
-        box_bg = '#1e1e1d'
+        bg = '#0D1117'
+        panel_bg = '#111827'
+        txt = '#E6EDF3'
+        muted = '#9DA7B3'
+        accent = sci_sky_blue
+        accent_alt = sci_orange
+        tertiary = sci_green
+        edge = '#2F3A46'
+        grid_color = '#2A3340'
+        box_bg = '#131A24'
     else:
-        bg = brand_light
+        bg = '#FFFFFF'
         panel_bg = '#ffffff'
-        txt = brand_dark
-        muted = brand_mid_gray
-        accent = brand_blue
-        accent_alt = brand_orange
-        tertiary = brand_green
-        edge = brand_light_gray
-        grid_color = brand_light_gray
-        box_bg = '#fffdf8'
+        txt = sci_black
+        muted = '#8A8A8A'
+        accent = sci_blue
+        accent_alt = sci_orange
+        tertiary = sci_green
+        edge = '#D9D9D9'
+        grid_color = '#E6E6E6'
+        box_bg = '#FAFAFA'
 
-    warn_color = brand_orange
+    warn_color = sci_red
 
-    plt.style.use('dark_background' if is_dark else 'seaborn-v0_8-whitegrid')
+    # Apply scientific-visualization style presets first.
+    if is_dark:
+        plt.style.use(str(SCIVIZ_PUBLICATION_STYLE))
+    else:
+        plt.style.use(str(SCIVIZ_PRESENTATION_STYLE))
+
     # Re-apply font settings after style.use, because style presets can overwrite font config.
     rcParams['font.family'] = 'sans-serif'
     rcParams['font.sans-serif'] = [
@@ -177,6 +188,10 @@ def render(kind: str, metrics: Metrics, monthly: pd.DataFrame, src: Path, out: P
         'DejaVu Sans',
     ]
     rcParams['axes.unicode_minus'] = False
+    rcParams['axes.prop_cycle'] = plt.cycler(
+        color=[sci_orange, sci_sky_blue, sci_green, sci_yellow, sci_blue, sci_red, sci_purple, sci_black]
+    )
+    rcParams['axes.grid'] = False
 
     fig = plt.figure(figsize=(16, 10), dpi=160)
     fig.patch.set_facecolor(bg)
