@@ -110,7 +110,13 @@ def build_summary_text(m: Metrics) -> str:
     return sanitize_and_validate("\n".join(lines), field_name="right_panel_summary")
 
 
-def render_figure(metrics: Metrics, source: Path, output_base: Path, font_name: str) -> None:
+def render_figure(
+    metrics: Metrics,
+    source: Path,
+    output_base: Path,
+    font_name: str,
+    formats: list[str],
+) -> None:
     # Convert missing glyph warning into hard failure to avoid silent rendering issues.
     warnings.filterwarnings("error", message=".*Glyph.*missing from font.*", category=UserWarning)
 
@@ -260,7 +266,7 @@ def render_figure(metrics: Metrics, source: Path, output_base: Path, font_name: 
     save_publication_figure(
         fig=fig,
         filename=output_base,
-        formats=["png", "pdf"],
+        formats=formats,
         dpi=300,
         facecolor=fig.get_facecolor(),
     )
@@ -269,23 +275,32 @@ def render_figure(metrics: Metrics, source: Path, output_base: Path, font_name: 
 
 def main() -> None:
     source = Path("/workspace/data/Coffe_sales.csv")
-    output_base = Path("/workspace/reports/coffee-sales/assets/coffee-sales-board-one-page-v2")
+    pdf_output_base = Path("/workspace/reports/coffee-sales/coffee-sales-board-one-page-v2")
+    png_output_base = Path("/workspace/reports/coffee-sales/assets/coffee-sales-board-one-page-v2")
     source.parent.mkdir(parents=True, exist_ok=True)
-    output_base.parent.mkdir(parents=True, exist_ok=True)
+    pdf_output_base.parent.mkdir(parents=True, exist_ok=True)
+    png_output_base.parent.mkdir(parents=True, exist_ok=True)
 
     font_name = pick_chinese_font()
     df = load_and_prepare(source)
     metrics = calc_metrics(df)
-    render_figure(metrics, source=source, output_base=output_base, font_name=font_name)
-
-    # Keep legacy pdf path used by markdown.
-    legacy_pdf = Path("/workspace/reports/coffee-sales/coffee-sales-board-one-page-v2.pdf")
-    generated_pdf = output_base.with_suffix(".pdf")
-    legacy_pdf.write_bytes(generated_pdf.read_bytes())
+    render_figure(
+        metrics,
+        source=source,
+        output_base=pdf_output_base,
+        font_name=font_name,
+        formats=["pdf"],
+    )
+    render_figure(
+        metrics,
+        source=source,
+        output_base=png_output_base,
+        font_name=font_name,
+        formats=["png"],
+    )
     print(f"font={font_name}")
-    print(f"png={output_base.with_suffix('.png')}")
-    print(f"pdf={generated_pdf}")
-    print(f"legacy_pdf={legacy_pdf}")
+    print(f"png={png_output_base.with_suffix('.png')}")
+    print(f"pdf={pdf_output_base.with_suffix('.pdf')}")
 
 
 if __name__ == "__main__":
