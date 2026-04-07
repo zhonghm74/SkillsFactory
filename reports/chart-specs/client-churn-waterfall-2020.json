@@ -1,0 +1,16 @@
+{
+  "chart_type": "column",
+  "axis": {
+    "x": "revenue_step",
+    "y": "revenue",
+    "y_min": 0,
+    "baseline_disclosure": "Waterfall columns use zero baseline and sequential steps to show cumulative revenue loss impact."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Revenue decreases step by step when top clients churn, because losing top one to five clients creates a large cumulative drop."
+  }
+}

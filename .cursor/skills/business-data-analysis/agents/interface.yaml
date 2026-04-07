@@ -1,0 +1,26 @@
+name: business-data-analysis
+version: 0.1.0
+inputs:
+  - name: business_goal
+    type: string
+  - name: metric_snapshot
+    type: object
+  - name: context
+    type: object
+outputs:
+  - name: driver_tree
+    type: object
+  - name: rca_summary
+    type: markdown
+  - name: hypothesis_summary
+    type: markdown
+  - name: executive_report
+    type: markdown
+  - name: visualization_brief
+    type: markdown
+  - name: chart_plan
+    type: object
+contracts:
+  - "Output must include recommendation, owner, and timeline"
+  - "Report must be BLUF and Minto-structured"
+  - "Visualization handoff must reference data-visualization skill and include chart objective, encoding, and integrity notes"

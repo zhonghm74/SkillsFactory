@@ -1,0 +1,16 @@
+{
+  "chart_type": "column",
+  "axis": {
+    "x": "year",
+    "y": "metric_value",
+    "y_min": 0,
+    "baseline_disclosure": "All small-multiple bar charts start at zero baseline for truthful 2019 vs 2020 comparison."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Across metrics, client count remains flat while order frequency and product/activity coverage increase, showing growth came from deeper engagement rather than more clients."
+  }
+}

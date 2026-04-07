@@ -1,0 +1,16 @@
+{
+  "chart_type": "line",
+  "axis": {
+    "x": "month",
+    "y": "revenue",
+    "y_min": 0,
+    "baseline_disclosure": "Line chart baseline is set to zero for easier executive comparison across months."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "The 2020 trend stays above 2019 in most months and peaks in June, indicating sustained higher demand."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Build a KPI tree for churn reduction",
+    "Diagnose sudden conversion drop and identify root cause",
+    "Write an executive business analysis report for this quarter"
+  ],
+  "should_not_trigger": [
+    "Clean null values in this CSV",
+    "Train an XGBoost model for prediction",
+    "Only improve chart colors in this dashboard"
+  ],
+  "near_neighbors": [
+    "Run only statistical significance tests",
+    "Create visualizations only",
+    "Format a market research report layout"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "chart_type": "column",
+  "axis": {
+    "x": "year",
+    "y": "share_pct",
+    "y_min": 0,
+    "baseline_disclosure": "100% stacked columns normalize total to 100% to compare concentration structure between years."
+  },
+  "accessibility": {
+    "regular_text_contrast": 7.0,
+    "large_text_contrast": 4.5,
+    "graphical_contrast": 3.5,
+    "uses_color_independent_encoding": true,
+    "alt_text": "Top client segments occupy a higher share block in both 2019 and 2020, and the concentration trend remains high across years."
+  }
+}
