@@ -8,7 +8,61 @@ formats with appropriate settings for various journals.
 
 import matplotlib.pyplot as plt
 from pathlib import Path
+import re
 from typing import List, Optional, Union
+from matplotlib.text import Text
+
+
+_LITERAL_ESCAPE_PATTERN = re.compile(r"\\[nrt]")
+
+
+def normalize_literal_escapes(text: str) -> str:
+    """
+    Convert common literal escape tokens (e.g. ``\\n``) into real characters.
+    """
+    normalized = text.replace(r"\r\n", "\n")
+    normalized = normalized.replace(r"\n", "\n")
+    normalized = normalized.replace(r"\r", "\r")
+    normalized = normalized.replace(r"\t", "\t")
+    return normalized
+
+
+def sanitize_figure_text_objects(fig: plt.Figure, fail_on_literal: bool = True) -> int:
+    """
+    Sanitize all matplotlib Text objects in a figure before export.
+
+    This prevents rendered artifacts where users see literal ``\\n`` strings
+    instead of line breaks in annotation/text boxes.
+
+    Returns
+    -------
+    int
+        Number of text objects rewritten.
+    """
+    rewritten = 0
+    violations = []
+
+    for text_obj in fig.findobj(match=Text):
+        raw = text_obj.get_text()
+        if not isinstance(raw, str) or not raw:
+            continue
+
+        cleaned = normalize_literal_escapes(raw)
+        if cleaned != raw:
+            text_obj.set_text(cleaned)
+            rewritten += 1
+
+        if fail_on_literal and _LITERAL_ESCAPE_PATTERN.search(text_obj.get_text()):
+            violations.append(text_obj.get_text())
+
+    if violations and fail_on_literal:
+        sample = violations[0]
+        raise ValueError(
+            "Figure text still contains literal escape tokens after sanitization. "
+            f"Example: {sample!r}"
+        )
+
+    return rewritten
 
 
 def save_publication_figure(
@@ -66,6 +120,7 @@ def save_publication_figure(
 
     for fmt in formats:
         output_file = output_dir / f"{base_name}.{fmt}"
+        sanitize_figure_text_objects(fig, fail_on_literal=True)
 
         # Set format-specific parameters
         save_kwargs = {

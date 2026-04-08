@@ -705,6 +705,11 @@ fig.write_image('figure.png', scale=3)  # scale=3 gives ~300 DPI
   - `configure_for_journal()`: One-command journal configuration
   - Run directly: `python scripts/style_presets.py` to see examples
 
+- **`validate_text_escaping.py`**: Text escape validation for figure annotations
+  - `sanitize_and_validate()`: Convert literal escape tokens (`\\n`, `\\t`, `\\r`) to real control characters
+  - `assert_no_literal_escapes()`: Fail fast when literal escape tokens remain in narrative text
+  - Use before `ax.text()/annotate()` when text may come from templates, JSON, or LLM output
+
 ### Assets Directory
 
 **Use these files in figures:**
@@ -754,6 +759,7 @@ fig.write_image('figure.png', scale=3)  # scale=3 gives ~300 DPI
 8. **Truncated axes**: Start bar charts at zero unless scientifically justified
 9. **Inconsistent styling**: Different fonts/colors across figures in same manuscript
 10. **No error bars**: Always show uncertainty
+11. **Literal escape artifacts in labels**: Showing `\\n` in output instead of true line breaks
 
 ## Final Checklist
 
@@ -772,6 +778,7 @@ Before submitting figures, verify:
 - [ ] Fonts consistent across all figures
 - [ ] Statistical significance clearly marked
 - [ ] Legend is clear and complete
+- [ ] Figure text has no unescaped literal tokens (`\\n`, `\\t`, `\\r`)
 
 Use this skill to ensure scientific figures meet the highest publication standards while remaining accessible to all readers.
 
