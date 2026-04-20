@@ -1,0 +1,30 @@
+name: causal-analysis
+version: 0.1.0
+inputs:
+  - name: data_path
+    type: string
+  - name: treatment_column
+    type: string
+  - name: outcome_column
+    type: string
+  - name: covariates
+    type: array
+  - name: business_question
+    type: string
+outputs:
+  - name: balance_report
+    type: markdown
+  - name: orthogonalization_report
+    type: markdown
+  - name: cate_scoring
+    type: csv
+  - name: attribution_report
+    type: markdown
+  - name: evaluation_report
+    type: markdown
+  - name: executive_summary
+    type: markdown
+contracts:
+  - "Must separate association from causal claims and state assumptions."
+  - "Must report overlap and weighting diagnostics before treatment effect estimation."
+  - "Must include at least one uplift ranking metric (Qini/AUUC) and caveat section."
