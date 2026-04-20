@@ -11,6 +11,7 @@ allowed-tools:
   - Bash
 metadata:
   version: 0.1.0
+  author: Zhong Haoming
   domains: [causal-inference, uplift-modeling, hte, policy-evaluation, attribution]
   outputs: [causal-plan, weighted-data, residualized-data, hte-summary, uplift-eval, causal-report, chart-specs]
 ---
