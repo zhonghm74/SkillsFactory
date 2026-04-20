@@ -1,0 +1,11 @@
+{
+  "name": "causal-analysis",
+  "lifecycle": "production",
+  "context_budget_tier": "production",
+  "factory_components": [
+    "agents/interface.yaml",
+    "references",
+    "scripts",
+    "evals/trigger_cases.json"
+  ]
+}
